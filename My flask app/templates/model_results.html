@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Model Result</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            color: #333;
+            margin: 0;
+        }
+        h1, h2, h3 {
+            text-align: center;
+        }
+        .container {
+            width: 90%;
+            max-width: 1200px; /* Max width for large screens */
+            margin: 50px auto; /* Center horizontally */
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .center-links {
+            text-align: center;
+            margin: 20px 0;
+        }
+        .center-links a {
+            display: inline-block;
+            margin: 10px 10px;
+            padding: 10px 20px;
+            text-decoration: none;
+            color: #fff;
+            background-color: #007bff;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+        .center-links a.btn-secondary {
+            background-color: #6c757d;
+        }
+        .center-links a:hover {
+            background-color: #0056b3;
+        }
+        .center-links a.btn-secondary:hover {
+            background-color: #5a6268;
+        }
+        form {
+            text-align: center;
+            margin: 20px 0;
+        }
+        input[type="file"] {
+            padding: 10px;
+            margin: 10px 0;
+        }
+        button {
+            padding: 15px 30px;
+            font-size: 18px;
+            background-color: #28a745;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            table-layout: fixed; /* Ensures equal width for columns */
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+            word-wrap: break-word; /* Ensures words are wrapped within cells */
+            word-break: break-all; /* Breaks words if necessary */
+            overflow: hidden; /* Hides overflow content */
+        }
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+        tr:nth-child(odd) {
+            background-color: #f9f9f9;
+        }
+        tr:nth-child(even) {
+            background-color: #e9e9e9;
+        }
+        .non-spam tr:nth-child(odd) {
+            background-color: #e6f7e6;
+        }
+        .non-spam tr:nth-child(even) {
+            background-color: #d6e7d6;
+        }
+        .spam tr:nth-child(odd) {
+            background-color: #f9e6e6;
+        }
+        .spam tr:nth-child(even) {
+            background-color: #f1d6d6;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 20px auto; /* Center horizontally */
+        }
+        
+    </style>
+</head>
+<body>
+    <div class="center-links">
+        <a href="{{ url_for('index') }}" class="btn btn-secondary mt-3">Go to Spam Word Management</a>
+        <a href="{{ url_for('model') }}" class="btn btn-secondary mt-3">Back to Model</a>
+        <a href="{{ url_for('classify') }}" class="btn btn-secondary mt-3">Classify Comments</a>
+    </div>
+    <div class="container">
+        <h1>Model Results</h1>
+        <h2>Accuracy: {{ accuracy }}</h2>
+
+        <h3>Confusion Matrix</h3>
+        <img src="data:image/png;base64,{{ heatmap_image }}" alt="Confusion Matrix">
+
+        <h2>ROC Curve:</h2>
+        <img src="data:image/png;base64,{{ roc_image }}" alt="ROC Curve">
+
+        <h2>Predictions Distribution:</h2>
+        <img src="data:image/png;base64,{{ pie_chart }}" alt="Predictions Distribution">
+
+        <h3>Paths to Saved CSV Files:</h3>
+        <p>Spam Comments CSV: {{ spam_csv_path }}</p>
+        <p>Non-Spam Comments CSV: {{ non_spam_csv_path }}</p>
+    </div>
+
+    <div class="container">
+        <h2>Comments Classification:</h2>
+
+        <h3>Non-Spam Comments</h3>
+        <table class="non-spam">
+            <tr>
+                <th>ID</th>
+                <th>Author</th>
+                <th>Comment</th>
+            </tr>
+            {% for comment in non_spam_comments %}
+            <tr>
+                <td>{{ comment[0] }}</td>
+                <td>{{ comment[1] }}</td>
+                <td>{{ comment[2] }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+
+        <h3>Spam Comments</h3>
+        <table class="spam">
+            <tr>
+                <th>ID</th>
+                <th>Author</th>
+                <th>Comment</th>
+            </tr>
+            {% for comment in spam_comments %}
+            <tr>
+                <td>{{ comment[0] }}</td>
+                <td>{{ comment[1] }}</td>
+                <td>{{ comment[2] }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+</body>
+</html>

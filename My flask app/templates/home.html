@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spam-Detector</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        /* Resetting default margin and padding */
+        body, h1, h2, p, ul {
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Global styles */
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(135deg, #6e8efb, #a777e3);
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* Navbar styles */
+        .navbar {
+            background-color: rgba(0, 123, 255, 0.9);
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .navbar-brand {
+            font-size: 1.8em;
+            color: #fff;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .nav-item {
+            margin-right: 30px;
+        }
+
+        .nav-link {
+            color: #fff;
+            text-decoration: none;
+            font-size: 1.2em;
+            padding: 10px 15px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            border-radius: 5px;
+        }
+
+        .nav-link:hover {
+            background-color: #0056b3;
+        }
+
+        /* Content styles */
+        .content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: calc(100vh - 60px);
+            padding: 20px;
+            text-align: center;
+            margin-top: 60px;
+        }
+
+        
+        h1 {
+            font-size: 3em;
+            padding: 20px 0;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        h2 {
+            font-size: 2em;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+
+        p {
+            font-size: 1.5em;
+            padding: 10px 0;
+        }
+
+        /* Card styles */
+        .card {
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px;
+            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+            width: calc(100% - 40px);
+            max-width: 300px;
+        }
+
+        .card:hover {
+            transform: scale(1.05);
+        }
+
+        .card-title {
+            font-size: 1.5em;
+            margin-bottom: 10px;
+        }
+
+        .card-text {
+            font-size: 1.2em;
+            margin-bottom: 20px;
+        }
+
+        .card-link {
+            font-size: 1.2em;
+            color: #007BFF;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+
+        .card-link:hover {
+            color: #0056b3;
+        }
+
+        .card-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        /* Footer styles */
+        .footer {
+            background-color: rgba(0, 123, 255, 0.9);
+            color: #fff;
+            padding: 10px 20px;
+            text-align: center;
+            box-shadow: 0px -4px 8px rgba(0, 0, 0, 0.1);
+            margin-top: auto;
+        }
+
+        /* Additional animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        .content-box, .navbar, .footer, .card {
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        @media (max-width: 768px) {
+            .navbar-nav {
+                display: none;
+            }
+
+            .hamburger {
+                display: flex;
+            }
+
+            .navbar-nav.active {
+                display: flex;
+            }
+
+            .card-container {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .card {
+                width: 100%;
+                max-width: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="navbar">
+        <a href="#" class="navbar-brand">SPAM DETECTOR</a>
+        <div class="nav-item">
+            <a href="{{ url_for('about') }}" class="nav-link">About Us</a>
+        </div>
+    </div>
+
+    <div class="content">
+        <div class="content-box">
+            <h1>SPAM DETECTOR</h1>
+        </div>
+        <div class="card-container">
+            <div class="card">
+                <h3 class="card-title">Scrape Comments</h3>
+                <p class="card-text">Scrape comments from YouTube.</p>
+                <a href="{{ url_for('scrape_youtube') }}" class="card-link">Click here</a>
+            </div>
+            <div class="card">
+                <h3 class="card-title">Spam Word Management</h3>
+                <p class="card-text">Manage and update spam words in your list.</p>
+                <a href="{{ url_for('index') }}" class="card-link">Click here</a>
+            </div>
+            <div class="card">
+                <h3 class="card-title"> Model</h3>
+                <p class="card-text">View and manage the spam detection model.</p>
+                <a href="{{ url_for('model') }}" class="card-link">Click here</a>
+            </div>
+            <div class="card">
+                <h3 class="card-title">Comments Classification</h3>
+                <p class="card-text">Classify comments as spam or not spam.</p>
+                <a href="{{ url_for('classify') }}" class="card-link">Click here </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        &copy; 2024 Spam Detector. All rights reserved.
+    </div>
+</body>
+</html>

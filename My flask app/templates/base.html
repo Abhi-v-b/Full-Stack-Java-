@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title>Spam Words Management and Model</title>
+</head>
+<body>
+    <div class="container">
+        {% block content %}{% endblock %}
+        {% for comment in comments %}
+            <div class="comment">
+                <p>Comment ID: {{ comment.comment_id }}</p>
+                <p>Author: {{ comment.author }}</p>
+                <p>{{ comment.content }}</p>
+            </div>
+        {% endfor %}
+    </div>
+</body>
+</html>

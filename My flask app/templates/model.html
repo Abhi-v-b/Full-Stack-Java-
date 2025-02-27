@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spam Detection Model</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f0f2f5;
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        label {
+            font-weight: bold;
+        }
+        select, input[type="file"] {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ced4da;
+            border-radius: 5px;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            margin: 20px 0;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .btn-homepage {
+            display: block;
+            width: 100%;
+            text-align: center;
+            padding: 10px;
+            margin-top: 20px;
+            background-color: #6c757d;
+            color: white;
+            border-radius: 5px;
+            text-decoration: none;
+        }
+        .btn-homepage:hover {
+            background-color: #5a6268;
+        }
+        #file_upload {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Spam Detection Model</h1>
+        <form method="post" enctype="multipart/form-data" action="{{ url_for('model') }}">
+            <div class="form-group">
+                <label for="voting_option">Voting Option:</label>
+                <select name="voting_option" id="voting_option" required class="form-control">
+                    <option value="1">Hard Voting</option>
+                    <option value="2">Soft Voting (All Models)</option>
+                    <option value="3">Soft Voting (Log & Naive)</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="dataset_option">Dataset Option:</label>
+                <select name="dataset_option" id="dataset_option" required class="form-control">
+                    <option value="1">Predefined Dataset</option>
+                    <option value="2">Upload Dataset</option>
+                </select>
+            </div>
+
+            <div class="form-group" id="file_upload">
+                <label for="file">Upload your dataset (CSV):</label>
+                <input type="file" name="file" id="file" class="form-control-file">
+            </div>
+
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+
+        <a href="{{ url_for('home') }}" class="btn-homepage">Go to Homepage</a>
+    </div>
+
+    <script>
+        document.getElementById('dataset_option').addEventListener('change', function () {
+            var fileUploadDiv = document.getElementById('file_upload');
+            if (this.value == '2') {
+                fileUploadDiv.style.display = 'block';
+            } else {
+                fileUploadDiv.style.display = 'none';
+            }
+        });
+    </script>
+
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

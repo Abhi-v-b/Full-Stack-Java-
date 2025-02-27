@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload CSV and Predict</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            color: #333;
+            margin: 0;
+        }
+        
+        /* Layout */
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .center-links {
+            text-align: center;
+            margin: 20px 0;
+        }
+        
+        /* Buttons */
+        .center-links a {
+            display: inline-block;
+            margin: 10px 10px;
+            padding: 10px 20px;
+            text-decoration: none;
+            color: #fff;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+        
+        .center-links a.btn-secondary {
+            background-color: #6c757d;
+        }
+        
+        .center-links a:hover {
+            background-color: #0056b3;
+        }
+        
+        .center-links a.btn-secondary:hover {
+            background-color: #5a6268;
+        }
+        
+        /* Form */
+        form {
+            text-align: center;
+            margin: 20px 0;
+        }
+        
+        input[type="file"] {
+            padding: 10px;
+            margin: 10px 0;
+        }
+        
+        button {
+            padding: 15px 30px;
+            font-size: 18px;
+            background-color: #28a745;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        button:hover {
+            background-color: #218838;
+        }
+        
+        /* Tables */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            table-layout: fixed;
+        }
+        
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+            word-wrap: break-word;
+            word-break: break-all;
+            overflow: hidden;
+        }
+        
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+        
+        tr:nth-child(odd) {
+            background-color: #f9f9f9;
+        }
+        
+        tr:nth-child(even) {
+            background-color: #e9e9e9;
+        }
+        
+        /* Comment Classification */
+        .non-spam tr:nth-child(odd) {
+            background-color: #e6f7e6;
+        }
+        
+        .non-spam tr:nth-child(even) {
+            background-color: #d6e7d6;
+        }
+        
+        .spam tr:nth-child(odd) {
+            background-color: #f9e6e6;
+        }
+        
+        .spam tr:nth-child(even) {
+            background-color: #f1d6d6;
+        }
+        
+        /* Images */
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 20px auto;
+        }
+        
+        /* Text Alignment */
+        h1, h2, h3 {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <h1>Upload CSV File To Predict</h1>
+    <div class="center-links">
+        <a href="{{ url_for('index') }}" class="btn btn-secondary mt-3">Go to Spam Word Management</a>
+        <a href="{{ url_for('home') }}" class="btn btn-secondary mt-3">Go to Home Page</a>
+        <!-- <a href="{{ url_for('model') }}" class="btn btn-secondary mt-3">Back to Model</a> -->
+    </div>
+    <form method="post" enctype="multipart/form-data" action="/classify">
+        <input type="file" name="file" accept=".csv" required>
+        <button type="submit">Predict</button>
+    </form>
+
+    <div class="container">
+        
+        <h2>Predictions Distribution:</h2>
+        <img src="data:image/png;base64,{{ pie_chart }}" alt="Predictions Distribution">
+
+        <h3>Paths to Saved CSV Files:</h3>
+        <p>Spam Comments CSV: {{ spam_csv_path }}</p>
+        <p>Non-Spam Comments CSV: {{ non_spam_csv_path }}</p>
+    
+    </div>
+    <h2>Comments Classification:</h2>
+
+    <h3>Spam Comments</h3>
+        <table class="spam">
+            <tr>
+                <th style="width: 10px;">#</th>
+                <th style="width: 40px;">Predict</th>
+                <th style="width: 130px;">Comment ID</th>
+                <th style="width: 100px;">Author</th>
+                <th style="width: 500px;">Comment</th>
+            </tr>
+            {% for index, comment in spam_data.iterrows() %}
+                <tr>
+                    <td>{{ loop.index }}</td> <!-- Add a counter for numbering -->
+                    <td onclick="makeEditable(this);" onblur="saveEdit(this);"> {{ comment['PREDICTION'] }} </td>
+                    <td>{{ comment['COMMENT_ID'] }}</td>
+                    <td>{{ comment['AUTHOR'] }}</td>
+                    <td>{{ comment['CONTENT'] }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+
+    <h3>Non-Spam Comments</h3>
+        <table class="non-spam">
+            <tr>
+                <th style="width: 50px;">#</th>
+                <th style="width: 100px;">Predict</th>
+                <th style="width: 100px;">Comment ID</th>
+                <th style="width: 150px;">Author</th>
+                <th style="width: 500px;">Comment</th>
+            </tr>
+            {% for index, comment in non_spam_data.iterrows() %}
+                <tr>
+                    <td>{{ loop.index }}</td> <!-- Add a counter for numbering -->
+                    <td onclick="makeEditable(this);" onblur="saveEdit(this);"> {{ comment['PREDICTION'] }} </td>
+                    <td>{{ comment['COMMENT_ID'] }}</td>
+                    <td>{{ comment['AUTHOR'] }}</td>
+                    <td>{{ comment['CONTENT'] }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+
+    
+        
+
+</body>
+</html>

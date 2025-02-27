@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spam Word Management</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        h1, h2 {
+            text-align: center;
+            margin-top: 20px;
+        }
+        form {
+            margin: 20px 0;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .btn {
+            margin-right: 10px;
+        }
+        .list-group-item {
+            background-color: #fff;
+            border: 1px solid #ddd;
+        }
+        .list-group-item:hover {
+            background-color: #f1f1f1;
+        }
+        .container {
+            max-width: 600px;
+            margin: auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .btn-secondary {
+            display: block;
+            width: 100%;
+            text-align: center;
+            margin-top: 20px;
+        }
+        .delete-btn {
+            float: right;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Spam Word Management</h1>
+        <a href="{{ url_for('model') }}" class="btn btn-secondary mt-3">Go to Model</a>
+        <a href="{{ url_for('classify') }}" class="btn btn-secondary mt-3">Classify Comments</a>
+        <a href="{{ url_for('home') }}"class="btn btn-secondary mt-3"> Go to Home Page</a>
+        <!-- Flash message section -->
+        {% if flash_message %}
+        <div class="alert alert-danger" role="alert">
+            {{ flash_message }}
+        </div>
+        {% endif %}
+        <!-- Form to add new spam word/phrase -->
+        <form method="POST" action="{{ url_for('update_spam') }}">
+            <div class="form-group">
+                <label for="word">Spam word/phrase:</label>
+                <input type="text" class="form-control" id="word" name="word" required>
+            </div>
+            <button type="submit" name="action" value="add" class="btn btn-primary">Add</button>
+        </form>
+        <!-- List of current spam words/phrases -->
+        <h2>Current Spam Words/Phrases</h2>
+        <ul class="list-group">
+            {% for word in spam_match %}
+            <li class="list-group-item">
+                {{ word }}
+                <form method="POST" action="{{ url_for('update_spam') }}" class="delete-btn">
+                    <input type="hidden" name="word" value="{{ word }}">
+                    <button type="submit" name="action" value="delete" class="btn btn-danger">Delete</button>
+                </form>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+    <!-- Bootstrap JS -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

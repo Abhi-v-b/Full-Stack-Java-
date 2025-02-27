@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About Us</title>
+  <style>
+    /* Reset default browser styles */
+    html, body {
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f1f1f1;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 20px auto;
+      padding: 20px 10px; /* Adjusted padding */
+      background-color: #fff;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      text-align: center;
+      margin-top: 30px;
+      color: #333;
+    }
+
+    h2 {
+      margin-top: 20px;
+      color: #4CAF50;
+    }
+
+    p {
+      line-height: 1.6;
+      color: #555;
+    }
+
+    ul {
+      list-style-type: disc;
+      margin-left: 20px;
+      color: #555;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 10px 20px;
+      background-color: #4CAF50;
+      color: white;
+      text-decoration: none;
+      border-radius: 5px;
+      margin-top: 20px;
+      transition: background-color 0.3s;
+    }
+
+    .btn:hover {
+      background-color: #45a049;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h1>About Us</h1>
+  <p>Welcome to our platform dedicated to revolutionizing spam detection in YouTube comments. At our core, we are a team of students committed to enhancing online communities by combatting spam effectively. We've crafted a solution tailored specifically for Personal YouTube.</p>
+  
+  <h2>Our Mission</h2>
+  <p>Our mission is simple yet ambitious: to create a safer, more engaging environment for online discussions on YouTube. We believe that every user deserves to participate in vibrant conversations without the disruption of spam. By leveraging cutting-edge technology, we aim to empower content creators and moderators with the tools they need to maintain healthy, spam-free communities.</p>
+  
+  <h2>What Sets Us Apart</h2>
+  <p>What sets us apart is our dedication to flexibility and customization. We understand that no two communities are alike, which is why we've designed our platform to be highly adaptable. Whether you're a small content creator or a large-scale YouTube channel, our system can be tailored to meet your specific needs.</p>
+  
+  <h2>Key Features</h2>
+  <ul>
+    <li><strong>Customizable Spam Matching:</strong> With our intuitive interface, you can easily modify spam matching words to stay ahead of evolving spam tactics.</li>
+    <li><strong>Multiple Estimator Options:</strong> Choose from three distinct estimator options, each optimized for different priorities and performance metrics.
+        <ul>
+            <li><strong>Option 1:</strong> This option includes a comprehensive array of models, such as Logistic Regression, Decision Trees (CART), Support Vector Machines, and Naive Bayes. These models are combined to form a voting ensemble, where each model's prediction is considered equally. This approach is known as "Hard Voting".</li>
+            <li><strong>Option 2:</strong> Similar to Option 1, this option also utilizes a variety of models, but it is streamlined for a varied toolkit specifically tailored for robust spam detection. Again, these models are combined through voting, but in this case, it employs "Soft Voting" where the models' predictions are weighted based on their confidence levels.</li>
+            <li><strong>Option 3:</strong> This option is streamlined for simplicity, offering only Logistic Regression and Naive Bayes models. These models are also combined through "Soft Voting", but with a focus on simplicity and effectiveness in spam filtering.</li>
+        </ul>
+    </li>
+    <li><strong>Integration with Your Own Dataset:</strong> Incorporate your own dataset to tailor the system's training to your specific community dynamics, enhancing the overall effectiveness of spam detection.</li>
+  </ul>
+  
+  <h2>Join Us</h2>
+  <p>Join us in our mission to foster healthier online discussions and create a safer, more engaging environment for YouTube users. Together, we can make a difference in combating spam and building thriving online communities.</p>
+  <a href="{{ url_for('home') }}" class="btn">Go to Homepage</a>
+</div>
+
+</body>
+</html>
