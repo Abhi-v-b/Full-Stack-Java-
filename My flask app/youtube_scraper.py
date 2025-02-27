@@ -3,7 +3,7 @@ import csv
 import re
 from googleapiclient.discovery import build
 
-api_key = 'AIzaSyCCWuhJcsGlZ5pnRLhyWYbtaMGYwVmdEsY'
+api_key = 'YOUR YT API KEY'
 youtube = build('youtube', 'v3', developerKey=api_key)
 
 def get_video_id_from_url(url):
