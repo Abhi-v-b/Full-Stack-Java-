@@ -4,7 +4,7 @@ Welcome to my GitHub repository! Here, you'll find various projects related to *
 
 ---
 
-## 📌 YouTube Comment Spam Classification Web Application  (MY Flask )
+## 📌 YouTube Comment Spam Classification Web Application (MY flask app) 
 🔹 **Technologies:** Python, Flask, Scikit-learn, Pandas, HTML, JavaScript  
 
 ### 🔹 Project Overview  
@@ -18,7 +18,7 @@ Welcome to my GitHub repository! Here, you'll find various projects related to *
 ✅ Machine Learning model ensemble for better accuracy  
 ✅ Web interface using Flask and JavaScript  
 
-
+🔗 **[Project Repository](#)** (Add your GitHub link here)
 
 ---
 
@@ -36,11 +36,11 @@ Welcome to my GitHub repository! Here, you'll find various projects related to *
 ✅ REST API for library operations  
 ✅ MySQL database integration  
 
-
+🔗 **[Project Repository](#)** (Add your GitHub link here)
 
 ---
 
-## 📌 Student Attendance System  
+## 📌 Student Attendance System  (SAMSTRACK_API)
 🔹 **Technologies:** Java, Collection, Hibernate, Spring Boot, MySQL, Postman  
 
 ### 🔹 Project Overview  
@@ -55,7 +55,7 @@ Welcome to my GitHub repository! Here, you'll find various projects related to *
 ✅ CRUD operations for attendance records  
 ✅ API testing using Postman  
 
-
+🔗 **[Project Repository](#)** (Add your GitHub link here)
 
 ---
 
@@ -72,4 +72,6 @@ Ensure you have the following installed:
 ### **🔹 Steps to Run**
 1. Clone the repository:  
    ```bash
+
+
    git clone https://github.com/Abhi-v-b/Full-Stack-Java-.git
