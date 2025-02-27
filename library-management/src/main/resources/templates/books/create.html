@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout/main :: layout(~{::title}, ~{::content})}">
+<head>
+    <title>Add New Book - Library Management System</title>
+</head>
+<body>
+    <div th:fragment="content">
+        <div class="container mt-4">
+            <h2>Add New Book</h2>
+            <form th:action="@{/books/create}" th:object="${book}" method="post" class="needs-validation" novalidate>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="title" class="form-label">Title*</label>
+                        <input type="text" class="form-control" id="title" th:field="*{title}" required>
+                        <div class="invalid-feedback" th:if="${#fields.hasErrors('title')}" th:errors="*{title}">
+                            Please enter a title.
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6 mb-3">
+                        <label for="author" class="form-label">Author*</label>
+                        <input type="text" class="form-control" id="author" th:field="*{author}" required>
+                        <div class="invalid-feedback" th:if="${#fields.hasErrors('author')}" th:errors="*{author}">
+                            Please enter an author.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="isbn" class="form-label">ISBN*</label>
+                        <input type="text" class="form-control" id="isbn" th:field="*{isbn}" required>
+                        <div class="invalid-feedback" th:if="${#fields.hasErrors('isbn')}" th:errors="*{isbn}">
+                            Please enter a valid ISBN.
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6 mb-3">
+                        <label for="publicationYear" class="form-label">Publication Year*</label>
+                        <input type="number" class="form-control" id="publicationYear" th:field="*{publicationYear}" required>
+                        <div class="invalid-feedback" th:if="${#fields.hasErrors('publicationYear')}" th:errors="*{publicationYear}">
+                            Please enter a valid year.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="publisher" class="form-label">Publisher</label>
+                        <input type="text" class="form-control" id="publisher" th:field="*{publisher}">
+                    </div>
+                    
+                    <div class="col-md-6 mb-3">
+                        <label for="category" class="form-label">Category</label>
+                        <select class="form-select" id="category" th:field="*{category}">
+                            <option value="">Select Category</option>
+                            <option value="Fiction">Fiction</option>
+                            <option value="Non-Fiction">Non-Fiction</option>
+                            <option value="Science Fiction">Science Fiction</option>
+                            <option value="Fantasy">Fantasy</option>
+                            <option value="Mystery">Mystery</option>
+                            <option value="Thriller">Thriller</option>
+                            <option value="Romance">Romance</option>
+                            <option value="Science">Science</option>
+                            <option value="History">History</option>
+                            <option value="Biography">Biography</option>
+                            <option value="Computer Science">Computer Science</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="description" class="form-label">Description</label>
+                    <textarea class="form-control" id="description" th:field="*{description}" rows="3"></textarea>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+                        <label for="quantity" class="form-label">Quantity*</label>
+                        <input type="number" class="form-control" id="quantity" th:field="*{quantity}" required min="1">
+                        <div class="invalid-feedback" th:if="${#fields.hasErrors('quantity')}" th:errors="*{quantity}">
+                            Please enter a valid quantity.
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-4 mb-3">
+                        <label for="location" class="form-label">Location</label>
+                        <input type="text" class="form-control" id="location" th:field="*{location}">
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <button type="submit" class="btn btn-primary">Save Book</button>
+                    <a th:href="@{/books}" class="btn btn-secondary">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html> 

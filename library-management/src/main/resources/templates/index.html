@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout/main :: html}">
+<head>
+    <title>Home</title>
+</head>
+<body>
+    <div th:fragment="content">
+        <h1>Welcome to Library Management System</h1>
+        
+        <!-- Dashboard Statistics -->
+        <div class="row mt-4">
+            <div class="col-md-3">
+                <div class="card bg-primary text-white">
+                    <div class="card-body">
+                        <h5 class="card-title">Total Books</h5>
+                        <p class="card-text" th:text="${totalBooks}">0</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-3">
+                <div class="card bg-success text-white">
+                    <div class="card-body">
+                        <h5 class="card-title">Active Users</h5>
+                        <p class="card-text" th:text="${activeUsers}">0</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-3">
+                <div class="card bg-warning text-dark">
+                    <div class="card-body">
+                        <h5 class="card-title">Current Borrowings</h5>
+                        <p class="card-text" th:text="${currentBorrowings}">0</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-3">
+                <div class="card bg-danger text-white">
+                    <div class="card-body">
+                        <h5 class="card-title">Overdue Books</h5>
+                        <p class="card-text" th:text="${overdueBooks}">0</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Quick Actions -->
+        <div class="row mt-4">
+            <div class="col-12">
+                <h2>Quick Actions</h2>
+                <div class="btn-group" role="group">
+                    <a href="/books/create" class="btn btn-primary">Add New Book</a>
+                    <a href="/users/form" class="btn btn-success">Register User</a>
+                    <a href="/borrowings/form" class="btn btn-warning">New Borrowing</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

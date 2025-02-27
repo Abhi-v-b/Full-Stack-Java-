@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layout/main :: html}">
+<head>
+    <title id="pageTitle">New Borrowing</title>
+</head>
+<body>
+    <div id="mainContent">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h1>New Borrowing</h1>
+            <a href="/borrowings" class="btn btn-outline-secondary">
+                <i class="fas fa-arrow-left"></i> Back to Borrowings
+            </a>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+                <form th:action="@{/borrowings/borrow}" 
+                      method="post" 
+                      id="borrowingForm" 
+                      class="needs-validation" 
+                      novalidate>
+
+                    <div class="row">
+                        <!-- User Selection -->
+                        <div class="col-md-6 mb-3">
+                            <label for="userId" class="form-label">User</label>
+                            <select class="form-select" 
+                                    id="userId" 
+                                    name="userId" 
+                                    required>
+                                <option value="">Select User</option>
+                                <option th:each="user : ${users}"
+                                        th:value="${user.id}"
+                                        th:text="${user.firstName + ' ' + user.lastName + ' (' + user.email + ')'}">
+                                    User Name
+                                </option>
+                            </select>
+                            <div class="invalid-feedback">Please select a user</div>
+                        </div>
+
+                        <!-- Book Selection -->
+                        <div class="col-md-6 mb-3">
+                            <label for="bookId" class="form-label">Book</label>
+                            <select class="form-select" 
+                                    id="bookId" 
+                                    name="bookId" 
+                                    required>
+                                <option value="">Select Book</option>
+                                <option th:each="book : ${availableBooks}"
+                                        th:value="${book.id}"
+                                        th:text="${book.title + ' by ' + book.author}">
+                                    Book Title
+                                </option>
+                            </select>
+                            <div class="invalid-feedback">Please select a book</div>
+                        </div>
+
+                        <!-- Duration -->
+                        <div class="col-md-6 mb-3">
+                            <label for="durationInDays" class="form-label">Duration (Days)</label>
+                            <input type="number" 
+                                   class="form-control" 
+                                   id="durationInDays" 
+                                   name="durationInDays" 
+                                   value="14" 
+                                   min="1" 
+                                   max="30" 
+                                   required>
+                            <div class="invalid-feedback">Please enter a duration between 1 and 30 days</div>
+                        </div>
+                    </div>
+
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-book"></i> Create Borrowing
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html> 

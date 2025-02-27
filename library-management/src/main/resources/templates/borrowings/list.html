@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layout/main :: html}">
+<head>
+    <title id="pageTitle">Borrowings</title>
+</head>
+<body>
+    <div id="mainContent">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h1>Borrowings</h1>
+            <a href="/borrowings/create" class="btn btn-primary">
+                <i class="fas fa-plus"></i> New Borrowing
+            </a>
+        </div>
+
+        <!-- Search Box -->
+        <div class="search-box mb-4">
+            <div class="input-group">
+                <span class="input-group-text"><i class="fas fa-search"></i></span>
+                <input type="text" id="borrowingSearch" class="form-control" placeholder="Search borrowings...">
+            </div>
+        </div>
+
+        <!-- Status Filter -->
+        <div class="mb-4">
+            <div class="btn-group" role="group">
+                <a href="/borrowings" class="btn btn-outline-primary" th:classappend="${status == null} ? 'active'">
+                    All
+                </a>
+                <a href="/borrowings?status=BORROWED" class="btn btn-outline-primary" th:classappend="${status == 'BORROWED'} ? 'active'">
+                    Borrowed
+                </a>
+                <a href="/borrowings?status=RETURNED" class="btn btn-outline-primary" th:classappend="${status == 'RETURNED'} ? 'active'">
+                    Returned
+                </a>
+                <a href="/borrowings?status=OVERDUE" class="btn btn-outline-primary" th:classappend="${status == 'OVERDUE'} ? 'active'">
+                    Overdue
+                </a>
+            </div>
+        </div>
+
+        <!-- Borrowings Table -->
+        <div class="card">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-hover" id="borrowingsTable">
+                        <thead>
+                            <tr>
+                                <th>Book</th>
+                                <th>User</th>
+                                <th>Borrow Date</th>
+                                <th>Due Date</th>
+                                <th>Return Date</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="borrowing : ${borrowings}">
+                                <td>
+                                    <a th:href="@{/books/{id}(id=${borrowing.book.id})}" 
+                                       th:text="${borrowing.book.title}"
+                                       class="text-decoration-none">
+                                        Book Title
+                                    </a>
+                                </td>
+                                <td>
+                                    <a th:href="@{/users/{id}(id=${borrowing.user.id})}" 
+                                       th:text="${borrowing.user.firstName + ' ' + borrowing.user.lastName}"
+                                       class="text-decoration-none">
+                                        User Name
+                                    </a>
+                                </td>
+                                <td th:text="${#temporals.format(borrowing.borrowDate, 'dd-MM-yyyy')}">01-01-2024</td>
+                                <td th:text="${#temporals.format(borrowing.dueDate, 'dd-MM-yyyy')}">15-01-2024</td>
+                                <td th:text="${borrowing.returnDate != null ? #temporals.format(borrowing.returnDate, 'dd-MM-yyyy') : '-'}">
+                                    -
+                                </td>
+                                <td>
+                                    <span th:class="${'badge ' + 
+                                        (borrowing.status == 'BORROWED' ? 'badge-borrowed' : 
+                                        (borrowing.status == 'RETURNED' ? 'badge-returned' : 'badge-overdue'))}"
+                                          th:text="${borrowing.status}">
+                                        Status
+                                    </span>
+                                </td>
+                                <td>
+                                    <div class="btn-group">
+                                        <a th:href="@{/borrowings/{id}(id=${borrowing.id})}" 
+                                           class="btn btn-sm btn-outline-primary"
+                                           data-bs-toggle="tooltip"
+                                           title="View Details">
+                                            <i class="fas fa-eye"></i>
+                                        </a>
+                                        <a th:if="${borrowing.status == 'BORROWED'}"
+                                           th:href="@{/borrowings/{id}/return(id=${borrowing.id})}" 
+                                           class="btn btn-sm btn-outline-success"
+                                           data-bs-toggle="tooltip"
+                                           title="Return Book">
+                                            <i class="fas fa-undo"></i>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Empty State -->
+                <div th:if="${#lists.isEmpty(borrowings)}" class="text-center py-5">
+                    <i class="fas fa-exchange-alt fa-3x text-muted mb-3"></i>
+                    <h3>No Borrowings Found</h3>
+                    <p class="text-muted">Start by creating a new borrowing record.</p>
+                    <a href="/borrowings/create" class="btn btn-primary">New Borrowing</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html> 
